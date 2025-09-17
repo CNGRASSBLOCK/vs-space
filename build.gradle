@@ -85,18 +85,18 @@ repositories {
         content { includeGroup("maven.modrinth") } }
     maven { name = 'MinecraftForge'
         url = 'https://maven.minecraftforge.net/' }
-    maven { url = 'https://maven.tterrag.com/'}
     maven { name = 'Kotlin for Forge'
         url = 'https://thedarkcolour.github.io/KotlinForForge/' }
     maven { name = "Valkyrien Skies Internal"
         url = "https://maven.valkyrienskies.org" }
+
+    mavenCentral()
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
-    jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: "[MC1.19.3,MC1.20)")
+    implementation 'thedarkcolour:kotlinforforge:4.10.0'
 
     compileOnly ("org.valkyrienskies.core:api:${vs_core_version}")
     compileOnly ("org.valkyrienskies.core:impl:${vs_core_version}")
