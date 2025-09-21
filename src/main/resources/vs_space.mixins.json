@@ -7,6 +7,7 @@
   "mixins": [
   ],
   "client": [
+    "MixinGameRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
