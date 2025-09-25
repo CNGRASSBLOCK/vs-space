@@ -2,14 +2,16 @@
   "vertex": "vs_space:planet/planet_render",
   "fragment": "vs_space:planet/planet_render",
   "samplers": [
-    {
-      "name": "DiffuseSampler"
-    }
+    { "name": "Sampler0" },
+    { "name": "Sampler1" },
+    { "name": "Sampler2" }
   ],
   "attributes": [
     "Position",
-    "UV0",
     "Color",
+    "UV0",
+    "UV1",
+    "UV2",
     "Normal"
   ],
   "uniforms": [

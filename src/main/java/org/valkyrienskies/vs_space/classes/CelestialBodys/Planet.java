@@ -60,19 +60,19 @@ public class Planet extends CelestialBody {
                     double xz_angle_start = xz * (Math.PI / 16);
                     double xz_angle_end = (xz + 1) * (Math.PI / 16);
                     VertexPos.add(new Vector3d(Math.sin(xz_angle_start) * Math.cos(y_angle_start) * this.radius,Math.sin(y_angle_start) * this.radius, Math.cos(xz_angle_start) * Math.cos(y_angle_start) * this.radius));
-                    UVPos.add(new Vector2f(xz / 64f,(-y + 16) / 32f));
+                    UVPos.add(new Vector2f(xz / 32f,(-y + 8) / 16f));
                     Normal.add(new Vector3f((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_start)), (float) (Math.sin(y_angle_start)), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_start))));
 
                     VertexPos.add(new Vector3d(Math.sin(xz_angle_end) * Math.cos(y_angle_start) * this.radius, Math.sin(y_angle_start) * this.radius, Math.cos(xz_angle_end) * Math.cos(y_angle_start) * this.radius));
-                    UVPos.add(new Vector2f((xz + 1) / 64f, (-y + 16) / 32f));
+                    UVPos.add(new Vector2f((xz + 1) / 32f, (-y + 8) / 16f));
                     Normal.add(new Vector3f((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_start)), (float) (Math.sin(y_angle_start)), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_start))));
 
                     VertexPos.add(new Vector3d(Math.sin(xz_angle_end) * Math.cos(y_angle_end) * this.radius, Math.sin(y_angle_end) * this.radius, Math.cos(xz_angle_end) * Math.cos(y_angle_end) * this.radius));
-                    UVPos.add(new Vector2f((xz + 1) / 64f, (-y + 15) / 32f));
+                    UVPos.add(new Vector2f((xz + 1) / 32f, (-y + 7) / 16f));
                     Normal.add(new Vector3f((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_end)), (float) (Math.sin(y_angle_end)), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_end))));
 
                     VertexPos.add(new Vector3d(Math.sin(xz_angle_start) * Math.cos(y_angle_end) * this.radius, Math.sin(y_angle_end) * this.radius, Math.cos(xz_angle_start) * Math.cos(y_angle_end) * this.radius));
-                    UVPos.add(new Vector2f(xz / 64f, (-y + 15) / 32f));
+                    UVPos.add(new Vector2f(xz / 32f, (-y + 7) / 16f));
                     Normal.add(new Vector3f((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_end)), (float) (Math.sin(y_angle_end)), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_end))));
                 }
             }
