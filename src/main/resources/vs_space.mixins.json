@@ -5,9 +5,10 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "vs_space.refmap.json",
   "mixins": [
+    "NoVoidDamage"
   ],
   "client": [
-    "MixinGameRenderer"
+    "FarRendererFix"
   ],
   "injectors": {
     "defaultRequire": 1
