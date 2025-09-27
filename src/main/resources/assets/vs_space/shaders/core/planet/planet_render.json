@@ -3,15 +3,12 @@
   "fragment": "vs_space:planet/planet_render",
   "samplers": [
     { "name": "Sampler0" },
-    { "name": "Sampler1" },
-    { "name": "Sampler2" }
+    { "name": "Sampler1" }
   ],
   "attributes": [
     "Position",
     "Color",
     "UV0",
-    "UV1",
-    "UV2",
     "Normal"
   ],
   "uniforms": [
@@ -44,6 +41,12 @@
       "type": "int",
       "count": 1,
       "values": [1]
+    },
+    {
+      "name": "StarPosList",
+      "type": "float",
+      "count": 3,
+      "values": [10000.0, 0.0, 0.0]
     }
   ]
 }

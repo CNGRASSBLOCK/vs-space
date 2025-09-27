@@ -1,11 +1,7 @@
 {
   "vertex": "vs_space:star/star_render",
   "fragment": "vs_space:star/star_render",
-  "samplers": [
-    {
-      "name": "DiffuseSampler"
-    }
-  ],
+  "samplers": [],
   "attributes": [
     "Position"
   ],

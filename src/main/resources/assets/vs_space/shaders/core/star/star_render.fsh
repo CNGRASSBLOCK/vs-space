@@ -1,4 +1,4 @@
-#version 150
+#version 410
 
 in vec4 OutStarColor;
 //输出颜色

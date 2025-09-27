@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import org.joml.*;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
 import org.valkyrienskies.vs_space.classes.CelestialBody;
 import org.valkyrienskies.vs_space.client.render.VSSpaceRenderType;
 import org.valkyrienskies.vs_space.client.render.VSSpaceShader;
@@ -51,6 +52,7 @@ public class Planet extends CelestialBody {
         VertexConsumer consumer = buffer.getBuffer(VSSpaceRenderType.PlanetRender(new ResourceLocation("vs_space:textures/celestial_body/planet/earth/earth_surface.png")));
 
         VSSpaceShader.StarRender.get().safeGetUniform("CameraPos").set((float) camPos.x(), (float) camPos.y(), (float) camPos.z());
+        RenderSystem.setShaderTexture(1, new ResourceLocation("vs_space:textures/celestial_body/planet/earth/earth_surface_night.png"));
 
         if (VertexPos.isEmpty()) {
             for (int y = -8; y <= 7; y += 1) {
