@@ -1,17 +1,11 @@
 package org.valkyrienskies.vs_space.classes.CelestialBodys;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.shaders.AbstractUniform;
-import com.mojang.blaze3d.shaders.Shader;
-import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import org.joml.*;
 import org.lwjgl.opengl.GL11;
@@ -42,20 +36,20 @@ public class Star extends CelestialBody{
     public double getTemperature() { return temperature; }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource buffer) {
-        Vec3 camPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-
-        RenderSystem.enableBlend();
-        RenderSystem.setShaderFogStart(Integer.MAX_VALUE);
-        RenderSystem.setShaderFogEnd(Integer.MAX_VALUE);
-        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.depthMask(false);
-        RenderSystem.depthFunc(GL11.GL_LEQUAL);
-
-        BuildModel(this.pos, new Vector3d(camPos.x(), camPos.y(), camPos.z()), this.rotate, buffer, poseStack.last().pose());
-
-        RenderSystem.depthMask(true);
-        RenderSystem.disableBlend();
+    public void render(PoseStack poseStack, Matrix4f projectionMatrix) {
+//        Vec3 camPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+//
+//        RenderSystem.enableBlend();
+//        RenderSystem.setShaderFogStart(Integer.MAX_VALUE);
+//        RenderSystem.setShaderFogEnd(Integer.MAX_VALUE);
+//        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+//        RenderSystem.depthMask(false);
+//        RenderSystem.depthFunc(GL11.GL_LEQUAL);
+//
+//        BuildModel(this.pos, new Vector3d(camPos.x(), camPos.y(), camPos.z()), this.rotate, buffer, poseStack.last().pose());
+//
+//        RenderSystem.depthMask(true);
+//        RenderSystem.disableBlend();
     }
 
     private final List<Vector3d> VertexPos = new ArrayList<>();

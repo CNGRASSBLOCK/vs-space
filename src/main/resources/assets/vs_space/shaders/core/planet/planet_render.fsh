@@ -13,7 +13,8 @@ void main() {
     vec4 night_color = texture(Sampler1, UV);
 
     color *= Light;
-    color.a = 1.0f;
+    night_color *= (1.0f - Light) * 0.75f;
+    night_color.a = 1.0f;
 
     fragColor = color + night_color;
 }

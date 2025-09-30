@@ -2,6 +2,7 @@ package org.valkyrienskies.vs_space.classes;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
+import org.joml.Matrix4f;
 import org.joml.Quaterniond;
 import org.joml.Vector3d;
 
@@ -26,5 +27,5 @@ public class CelestialBody {
     public void rotateTo(Quaterniond rotate) { this.rotate.set(new Quaterniond(rotate)); }
     public void setRadius(double radius) { this.radius = radius; }
 
-    public void render(PoseStack poseStack, MultiBufferSource buffer) {}
+    public void render(PoseStack poseStack, Matrix4f projectionMatrix) {}
 }

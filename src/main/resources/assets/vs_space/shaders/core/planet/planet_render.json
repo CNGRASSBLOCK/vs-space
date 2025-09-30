@@ -25,28 +25,64 @@
       "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
     },
     {
-      "name": "CameraPos",
-      "type": "float",
-      "count": 3,
-      "values": [0.0, 0.0, 0.0]
-    },
-    {
       "name": "PlanetPos",
       "type": "float",
       "count": 3,
       "values": [0.0, 0.0, 0.0]
     },
     {
-      "name": "StarPosListSize",
+      "name": "StarNumber",
       "type": "int",
       "count": 1,
-      "values": [1]
+      "values": [0]
     },
     {
-      "name": "StarPosList",
+      "name": "StarPos_0",
       "type": "float",
       "count": 3,
-      "values": [10000.0, 0.0, 0.0]
+      "values": [0.0, 0.0, 0.0]
+    },
+    {
+      "name": "StarPos_1",
+      "type": "float",
+      "count": 3,
+      "values": [0.0, 0.0, 0.0]
+    },
+    {
+      "name": "StarPos_2",
+      "type": "float",
+      "count": 3,
+      "values": [0.0, 0.0, 0.0]
+    },
+    {
+      "name": "StarPos_3",
+      "type": "float",
+      "count": 3,
+      "values": [0.0, 0.0, 0.0]
+    },
+    {
+      "name": "StarPos_4",
+      "type": "float",
+      "count": 3,
+      "values": [0.0, 0.0, 0.0]
+    },
+    {
+      "name": "StarPos_5",
+      "type": "float",
+      "count": 3,
+      "values": [0.0, 0.0, 0.0]
+    },
+    {
+      "name": "StarPos_6",
+      "type": "float",
+      "count": 3,
+      "values": [0.0, 0.0, 0.0]
+    },
+    {
+      "name": "StarPos_7",
+      "type": "float",
+      "count": 3,
+      "values": [0.0, 0.0, 0.0]
     }
   ]
 }
