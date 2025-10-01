@@ -1,4 +1,4 @@
-package org.valkyrienskies.vs_space.client.render;
+package org.valkyrienskies.vs_space.client.render.shader;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -28,20 +28,4 @@ public class VSSpaceRenderType extends RenderType {
 
     public static RenderType StarRender() { return StarRender; }
     public static RenderType PlanetRender(ResourceLocation resourceLocation) { return PlanetRender.apply(resourceLocation); }
-
-    public static class LightmapStateShard extends RenderStateShard.BooleanStateShard {
-        public LightmapStateShard(boolean p_110271_) {
-            super("lightmap", () -> {
-                if (p_110271_) {
-                    Minecraft.getInstance().gameRenderer.lightTexture().turnOnLightLayer();
-                }
-
-            }, () -> {
-                if (p_110271_) {
-                    Minecraft.getInstance().gameRenderer.lightTexture().turnOffLightLayer();
-                }
-
-            }, p_110271_);
-        }
-    }
 }

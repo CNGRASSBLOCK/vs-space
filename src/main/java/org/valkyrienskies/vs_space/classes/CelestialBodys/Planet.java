@@ -4,16 +4,13 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import org.joml.*;
 import org.lwjgl.opengl.GL11;
 import org.valkyrienskies.vs_space.classes.CelestialBody;
-import org.valkyrienskies.vs_space.client.render.VSSpaceRenderType;
-import org.valkyrienskies.vs_space.client.render.VSSpaceShader;
+import org.valkyrienskies.vs_space.client.render.shader.VSSpaceShader;
 
 import java.lang.Math;
 import java.util.ArrayList;
@@ -32,7 +29,7 @@ public class Planet extends CelestialBody {
         RenderSystem.setShaderFogStart(Integer.MAX_VALUE);
         RenderSystem.setShaderFogEnd(Integer.MAX_VALUE);
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-        RenderSystem.depthMask(false);
+        RenderSystem.depthMask(true);
         RenderSystem.depthFunc(GL11.GL_LEQUAL);
 
         poseStack.pushPose();
@@ -49,26 +46,23 @@ public class Planet extends CelestialBody {
         if (vertexBuffer == null) {
             BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
             bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.NEW_ENTITY);
-            for (int y = -8; y <= 7; y += 1) {
-                double y_angle_start = y * (Math.PI / 16);
-                double y_angle_end = (y + 1) * (Math.PI / 16);
-                for (int xz = 0; xz <= 31; xz += 1) {
-                    double xz_angle_start = xz * (Math.PI / 16);
-                    double xz_angle_end = (xz + 1) * (Math.PI / 16);
-                    bufferBuilder.vertex((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_start) * this.radius), (float) (Math.sin(y_angle_start) * this.radius), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_start) * this.radius)).color(1f, 1f, 1f, 1f).uv(xz / 32f,(-y + 8) / 16f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_start)), (float) (Math.sin(y_angle_start)), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_start))).endVertex();
-                    bufferBuilder.vertex((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_start) * this.radius), (float) (Math.sin(y_angle_start) * this.radius), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_start) * this.radius)).color(1f, 1f, 1f, 1f).uv((xz + 1) / 32f, (-y + 8) / 16f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_start)), (float) (Math.sin(y_angle_start)), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_start))).endVertex();
-                    bufferBuilder.vertex((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_end) * this.radius), (float) (Math.sin(y_angle_end) * this.radius), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_end) * this.radius)).color(1f, 1f, 1f, 1f).uv((xz + 1) / 32f, (-y + 7) / 16f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_end)), (float) (Math.sin(y_angle_end)), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_end))).endVertex();
-                    bufferBuilder.vertex((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_end) * this.radius), (float) (Math.sin(y_angle_end) * this.radius), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_end) * this.radius)).color(1f, 1f, 1f, 1f).uv(xz / 32f, (-y + 7) / 16f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_end)), (float) (Math.sin(y_angle_end)), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_end))).endVertex();}
+            for (int y = -16; y <= 15; y += 1) {
+                double y_angle_start = y * (Math.PI / 32);
+                double y_angle_end = (y + 1) * (Math.PI / 32);
+                for (int xz = 0; xz <= 63; xz += 1) {
+                    double xz_angle_start = xz * (Math.PI / 32);
+                    double xz_angle_end = (xz + 1) * (Math.PI / 32);
+                    bufferBuilder.vertex((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_start) * this.radius), (float) (Math.sin(y_angle_start) * this.radius), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_start) * this.radius)).color(1f, 1f, 1f, 1f).uv(xz / 64f,(-y + 16) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_start)), (float) (Math.sin(y_angle_start)), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_start))).endVertex();
+                    bufferBuilder.vertex((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_start) * this.radius), (float) (Math.sin(y_angle_start) * this.radius), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_start) * this.radius)).color(1f, 1f, 1f, 1f).uv((xz + 1) / 64f, (-y + 16) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_start)), (float) (Math.sin(y_angle_start)), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_start))).endVertex();
+                    bufferBuilder.vertex((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_end) * this.radius), (float) (Math.sin(y_angle_end) * this.radius), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_end) * this.radius)).color(1f, 1f, 1f, 1f).uv((xz + 1) / 64f, (-y + 15) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_end)), (float) (Math.sin(y_angle_end)), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_end))).endVertex();
+                    bufferBuilder.vertex((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_end) * this.radius), (float) (Math.sin(y_angle_end) * this.radius), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_end) * this.radius)).color(1f, 1f, 1f, 1f).uv(xz / 64f, (-y + 15) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_end)), (float) (Math.sin(y_angle_end)), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_end))).endVertex();}
             }
             vertexBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
             vertexBuffer.bind();
             vertexBuffer.upload(bufferBuilder.end());
             VertexBuffer.unbind();
         }
-
-        VSSpaceShader.PlanetRender.get().safeGetUniform("StarNumber").set(2);
-        VSSpaceShader.PlanetRender.get().safeGetUniform("StarPos_0").set(0.0f, 0.0f, 10000.0f);
-        VSSpaceShader.PlanetRender.get().safeGetUniform("StarPos_1").set(-10000.0f, 0.0f, 0.0f);
+        VSSpaceShader.PlanetRender.get().safeGetUniform("PlanetPos").set((float) pos.x(), (float) pos.y(), (float) pos.z());
 
         RenderSystem.setShaderTexture(0, new ResourceLocation("vs_space:textures/celestial_body/planet/earth/earth_surface.png"));
         RenderSystem.setShaderTexture(1, new ResourceLocation("vs_space:textures/celestial_body/planet/earth/earth_surface_night.png"));

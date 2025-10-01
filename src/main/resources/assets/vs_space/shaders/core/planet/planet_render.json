@@ -29,60 +29,6 @@
       "type": "float",
       "count": 3,
       "values": [0.0, 0.0, 0.0]
-    },
-    {
-      "name": "StarNumber",
-      "type": "int",
-      "count": 1,
-      "values": [0]
-    },
-    {
-      "name": "StarPos_0",
-      "type": "float",
-      "count": 3,
-      "values": [0.0, 0.0, 0.0]
-    },
-    {
-      "name": "StarPos_1",
-      "type": "float",
-      "count": 3,
-      "values": [0.0, 0.0, 0.0]
-    },
-    {
-      "name": "StarPos_2",
-      "type": "float",
-      "count": 3,
-      "values": [0.0, 0.0, 0.0]
-    },
-    {
-      "name": "StarPos_3",
-      "type": "float",
-      "count": 3,
-      "values": [0.0, 0.0, 0.0]
-    },
-    {
-      "name": "StarPos_4",
-      "type": "float",
-      "count": 3,
-      "values": [0.0, 0.0, 0.0]
-    },
-    {
-      "name": "StarPos_5",
-      "type": "float",
-      "count": 3,
-      "values": [0.0, 0.0, 0.0]
-    },
-    {
-      "name": "StarPos_6",
-      "type": "float",
-      "count": 3,
-      "values": [0.0, 0.0, 0.0]
-    },
-    {
-      "name": "StarPos_7",
-      "type": "float",
-      "count": 3,
-      "values": [0.0, 0.0, 0.0]
     }
   ]
 }

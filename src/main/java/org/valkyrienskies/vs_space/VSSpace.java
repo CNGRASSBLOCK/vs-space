@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+import org.valkyrienskies.vs_space.client.render.shader.VSSpaceShader;
 import org.valkyrienskies.vs_space.data.VSSpaceDataPack;
 
 @Mod(VSSpace.MODID)
@@ -22,6 +23,5 @@ public class VSSpace {
 
     private void onCommonSetup(FMLCommonSetupEvent event) {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
     }
 }
