@@ -23,6 +23,8 @@ struct Star {
 struct Planet {
     vec3 Pos;   //行星位置
     float R;    //行星半径
+    float AtmosphericHeight; //大气高度
+    vec4 AtmosphericColor;   //大气颜色
 };
 
 layout(std140) uniform CelestialBodyData {

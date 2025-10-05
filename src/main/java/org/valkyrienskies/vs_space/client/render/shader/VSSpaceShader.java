@@ -21,6 +21,7 @@ public class VSSpaceShader {
     public static Supplier<ShaderInstance> PlanetRender;
     //后处理着色器
     public static PostChain StarBloom;
+    public static PostChain PlanetAtmosphere;
 
     @Mod.EventBusSubscriber(modid = VSSpace.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class RegisterShaders {
@@ -44,6 +45,11 @@ public class VSSpaceShader {
                     StarBloom = new PostChain(Minecraft.getInstance().getTextureManager(), Minecraft.getInstance().getResourceManager(), Minecraft.getInstance().getMainRenderTarget(),
                             new ResourceLocation(VSSpace.MODID, "shaders/post/star/star_bloom.json"));
                     StarBloom.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
+                }
+                if (PlanetAtmosphere == null) {
+                    PlanetAtmosphere = new PostChain(Minecraft.getInstance().getTextureManager(), Minecraft.getInstance().getResourceManager(), Minecraft.getInstance().getMainRenderTarget(),
+                            new ResourceLocation(VSSpace.MODID, "shaders/post/planet/planet_atmosphere.json"));
+                    PlanetAtmosphere.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
                 }
             } catch (Throwable throwable) {
                 VSSpace.LOGGER.error(throwable.getMessage()); }

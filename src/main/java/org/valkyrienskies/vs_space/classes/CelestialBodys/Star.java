@@ -17,14 +17,11 @@ import java.lang.Math;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Star extends CelestialBody{
-    protected double temperature = 0; //开尔文
-    public final float[] RGB = new float[]{1f, 1f, 1f};
+public class Star extends CelestialBody {
+    private double temperature = 0; //开尔文
+    private final float[] RGB = new float[]{1f, 1f, 1f};
 
-
-    public Star(String name, Vector3d pos, Quaterniond rotate, double radius) {
-        super(name, pos, rotate, radius);
-    }
+    public Star(String name, Vector3d pos, Quaterniond rotate, double radius) { super(name, pos, rotate, radius); }
 
     public void setTemperature(double temperature) {
         this.temperature = temperature;
@@ -34,6 +31,7 @@ public class Star extends CelestialBody{
         RGB[2] = IRGB[2] / 255f;
     }
     public double getTemperature() { return temperature; }
+    public float[] getColor() { return RGB; }
 
     @Override
     public void render(PoseStack poseStack, Matrix4f projectionMatrix) {

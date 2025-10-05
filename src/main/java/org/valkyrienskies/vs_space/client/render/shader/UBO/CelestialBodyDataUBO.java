@@ -11,8 +11,8 @@ import java.util.List;
 
 public class CelestialBodyDataUBO extends UniformBufferObject {
     public CelestialBodyDataUBO(int bindingPoint) {
-        super(bindingPoint, 2848);
-        //star: int + 16 * (vec3 + vec4 + float) + planet: int + 64 * (vec3 + float)
+        super(bindingPoint, 3872);
+        //star: int + 16 * (vec3 + vec4 + float) + planet: int + 64 * (vec3 + float + float + vec4)
     }
 
     public void UpDateCelestialBodyList(List<CelestialBody> celestialBodyList) {
@@ -33,9 +33,9 @@ public class CelestialBodyDataUBO extends UniformBufferObject {
             buffer.putFloat((float) star.getPos().y());
             buffer.putFloat((float) star.getPos().z());
             buffer.putFloat(0f); //补齐Pos
-            buffer.putFloat(star.RGB[0]);
-            buffer.putFloat(star.RGB[1]);
-            buffer.putFloat(star.RGB[2]);
+            buffer.putFloat(star.getColor()[0]);
+            buffer.putFloat(star.getColor()[1]);
+            buffer.putFloat(star.getColor()[2]);
             buffer.putFloat(1f); //补齐Color
             buffer.putFloat((float) star.getRadius());
             buffer.putFloat(0f); //补齐R
@@ -64,13 +64,21 @@ public class CelestialBodyDataUBO extends UniformBufferObject {
             buffer.putFloat((float) planet.getPos().x());
             buffer.putFloat((float) planet.getPos().y());
             buffer.putFloat((float) planet.getPos().z());
-            buffer.putFloat(0f); //补齐Pos
             buffer.putFloat((float) planet.getRadius());
-            buffer.putFloat(0f); //补齐R
-            buffer.putFloat(0f); //补齐R
-            buffer.putFloat(0f); //补齐R
+            buffer.putFloat((float) planet.getAtmosphericHeight());
+            buffer.putFloat(0f); //补齐AtmosphericHeight
+            buffer.putFloat(0f); //补齐AtmosphericHeight
+            buffer.putFloat(0f); //补齐AtmosphericHeight
+            buffer.putFloat((float) planet.getAtmosphericColor().x());
+            buffer.putFloat((float) planet.getAtmosphericColor().y());
+            buffer.putFloat((float) planet.getAtmosphericColor().z());
+            buffer.putFloat((float) planet.getAtmosphericColor().w());
         }
         for (int i = 0; i < 64 - PlanetList.size(); i++) { //补齐列表的
+            buffer.putFloat(0f);
+            buffer.putFloat(0f);
+            buffer.putFloat(0f);
+            buffer.putFloat(0f);
             buffer.putFloat(0f);
             buffer.putFloat(0f);
             buffer.putFloat(0f);

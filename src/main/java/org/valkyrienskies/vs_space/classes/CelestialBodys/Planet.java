@@ -17,9 +17,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Planet extends CelestialBody {
-    public Planet(String name, Vector3d pos, Quaterniond rotate, double radius) {
+    private double AtmosphericHeight;
+    private Vector4d AtmosphericColor;
+
+    public Planet(String name, Vector3d pos, Quaterniond rotate, double radius, double atmospheric_height, Vector4d atmospheric_color) {
         super(name, pos, rotate, radius);
+        this.AtmosphericHeight = atmospheric_height;
+        this.AtmosphericColor = new Vector4d(atmospheric_color);
     }
+
+    public void setAtmosphericHeight(double atmospheric_height) { this.AtmosphericHeight = atmospheric_height; }
+    public double getAtmosphericHeight() { return this.AtmosphericHeight; }
+    public void setAtmosphericColor(Vector4d atmospheric_color) { this.AtmosphericColor = new Vector4d(atmospheric_color); }
+    public Vector4d getAtmosphericColor() { return new Vector4d(this.AtmosphericColor); }
 
     @Override
     public void render(PoseStack poseStack, Matrix4f projectionMatrix) {
