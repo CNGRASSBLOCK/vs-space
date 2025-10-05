@@ -20,7 +20,7 @@ public class VSSpaceShader {
     public static Supplier<ShaderInstance> StarRender;
     public static Supplier<ShaderInstance> PlanetRender;
     //后处理着色器
-    public static PostChain StarLight;
+    public static PostChain StarBloom;
 
     @Mod.EventBusSubscriber(modid = VSSpace.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class RegisterShaders {
@@ -39,13 +39,14 @@ public class VSSpaceShader {
     public static class RegisterEffects {
         @SubscribeEvent
         public static void RegisterEffects(TickEvent.ClientTickEvent clientTickEvent) {
-            if (StarLight == null) {
-                try {
-                    StarLight = new PostChain(Minecraft.getInstance().getTextureManager(), Minecraft.getInstance().getResourceManager(), Minecraft.getInstance().getMainRenderTarget(),
-                            new ResourceLocation(VSSpace.MODID, "shaders/post/star_lights.json"));
-                    StarLight.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
-                } catch (IOException ignored) {}
-            }
+            try {
+                if (StarBloom == null) {
+                    StarBloom = new PostChain(Minecraft.getInstance().getTextureManager(), Minecraft.getInstance().getResourceManager(), Minecraft.getInstance().getMainRenderTarget(),
+                            new ResourceLocation(VSSpace.MODID, "shaders/post/star/star_bloom.json"));
+                    StarBloom.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
+                }
+            } catch (Throwable throwable) {
+                VSSpace.LOGGER.error(throwable.getMessage()); }
         }
     }
 }

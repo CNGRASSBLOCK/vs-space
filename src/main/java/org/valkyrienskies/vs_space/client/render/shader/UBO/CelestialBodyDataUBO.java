@@ -11,8 +11,8 @@ import java.util.List;
 
 public class CelestialBodyDataUBO extends UniformBufferObject {
     public CelestialBodyDataUBO(int bindingPoint) {
-        super(bindingPoint, 2592);
-        //star: int + 16 * (vec3 + vec4) + planet: int + 64 * (vec3 + float)
+        super(bindingPoint, 2848);
+        //star: int + 16 * (vec3 + vec4 + float) + planet: int + 64 * (vec3 + float)
     }
 
     public void UpDateCelestialBodyList(List<CelestialBody> celestialBodyList) {
@@ -37,8 +37,16 @@ public class CelestialBodyDataUBO extends UniformBufferObject {
             buffer.putFloat(star.RGB[1]);
             buffer.putFloat(star.RGB[2]);
             buffer.putFloat(1f); //补齐Color
+            buffer.putFloat((float) star.getRadius());
+            buffer.putFloat(0f); //补齐R
+            buffer.putFloat(0f); //补齐R
+            buffer.putFloat(0f); //补齐R
         }
         for (int i = 0; i < 16 - StarList.size(); i++) { //补齐列表的
+            buffer.putFloat(0f);
+            buffer.putFloat(0f);
+            buffer.putFloat(0f);
+            buffer.putFloat(0f);
             buffer.putFloat(0f);
             buffer.putFloat(0f);
             buffer.putFloat(0f);

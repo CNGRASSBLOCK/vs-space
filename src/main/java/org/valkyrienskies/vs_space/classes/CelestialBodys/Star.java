@@ -55,7 +55,7 @@ public class Star extends CelestialBody{
         RenderSystem.disableBlend();
     }
 
-    private static VertexBuffer vertexBuffer = null;
+    private VertexBuffer vertexBuffer = null;
     private void RenderModel(Vector3d pos, Vector3d camPos, Quaterniond rotate, Matrix4f matrix, Matrix4f projectionMatrix) {
         if (vertexBuffer == null) {
             BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();

@@ -2,6 +2,7 @@ package org.valkyrienskies.vs_space.server;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import org.apache.logging.log4j.core.jmx.Server;
 import org.valkyrienskies.vs_space.classes.CelestialBody;
 

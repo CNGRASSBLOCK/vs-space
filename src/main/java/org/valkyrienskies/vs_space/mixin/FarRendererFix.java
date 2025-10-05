@@ -21,7 +21,7 @@ public class FarRendererFix {
     public float getDepthFar() {
         ClientLevel clientLevel = Minecraft.getInstance().level;
         if (clientLevel == null) return renderDistance * 4.0f;
-        if (VSSpaceDataPack.SpaceWorld_ID.contains(clientLevel.dimension().location().toString())) return Float.POSITIVE_INFINITY;
+        if (VSSpaceDataPack.SpaceWorld_ID.contains(clientLevel.dimension().location().toString())) return 1048576f;
         return renderDistance * 4.0f;
     }
 }

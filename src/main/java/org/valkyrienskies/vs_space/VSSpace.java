@@ -13,7 +13,7 @@ import org.valkyrienskies.vs_space.data.VSSpaceDataPack;
 public class VSSpace {
 
     public static final String MODID = "vs_space";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public VSSpace() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

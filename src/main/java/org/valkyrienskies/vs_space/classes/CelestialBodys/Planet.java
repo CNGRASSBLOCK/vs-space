@@ -37,11 +37,10 @@ public class Planet extends CelestialBody {
         RenderModel(this.pos, new Vector3d(camPos.x(), camPos.y(), camPos.z()), this.rotate, poseStack.last().pose(), projectionMatrix);
         poseStack.popPose();
 
-        RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
     }
 
-    private static VertexBuffer vertexBuffer = null;
+    private VertexBuffer vertexBuffer = null;
     private void RenderModel(Vector3d pos, Vector3d camPos, Quaterniond rotate, Matrix4f matrix, Matrix4f projectionMatrix) {
         if (vertexBuffer == null) {
             BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
@@ -52,10 +51,10 @@ public class Planet extends CelestialBody {
                 for (int xz = 0; xz <= 63; xz += 1) {
                     double xz_angle_start = xz * (Math.PI / 32);
                     double xz_angle_end = (xz + 1) * (Math.PI / 32);
-                    bufferBuilder.vertex((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_start) * this.radius), (float) (Math.sin(y_angle_start) * this.radius), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_start) * this.radius)).color(1f, 1f, 1f, 1f).uv(xz / 64f,(-y + 16) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_start)), (float) (Math.sin(y_angle_start)), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_start))).endVertex();
-                    bufferBuilder.vertex((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_start) * this.radius), (float) (Math.sin(y_angle_start) * this.radius), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_start) * this.radius)).color(1f, 1f, 1f, 1f).uv((xz + 1) / 64f, (-y + 16) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_start)), (float) (Math.sin(y_angle_start)), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_start))).endVertex();
-                    bufferBuilder.vertex((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_end) * this.radius), (float) (Math.sin(y_angle_end) * this.radius), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_end) * this.radius)).color(1f, 1f, 1f, 1f).uv((xz + 1) / 64f, (-y + 15) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_end)), (float) (Math.sin(y_angle_end)), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_end))).endVertex();
-                    bufferBuilder.vertex((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_end) * this.radius), (float) (Math.sin(y_angle_end) * this.radius), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_end) * this.radius)).color(1f, 1f, 1f, 1f).uv(xz / 64f, (-y + 15) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_end)), (float) (Math.sin(y_angle_end)), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_end))).endVertex();}
+                    bufferBuilder.vertex(Math.sin(xz_angle_start) * Math.cos(y_angle_start) * this.radius, Math.sin(y_angle_start) * this.radius, Math.cos(xz_angle_start) * Math.cos(y_angle_start) * this.radius).color(1f, 1f, 1f, 1f).uv(xz / 64f,(-y + 16) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_start)), (float) (Math.sin(y_angle_start)), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_start))).endVertex();
+                    bufferBuilder.vertex(Math.sin(xz_angle_end) * Math.cos(y_angle_start) * this.radius, Math.sin(y_angle_start) * this.radius, Math.cos(xz_angle_end) * Math.cos(y_angle_start) * this.radius).color(1f, 1f, 1f, 1f).uv((xz + 1) / 64f, (-y + 16) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_start)), (float) (Math.sin(y_angle_start)), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_start))).endVertex();
+                    bufferBuilder.vertex(Math.sin(xz_angle_end) * Math.cos(y_angle_end) * this.radius, Math.sin(y_angle_end) * this.radius, Math.cos(xz_angle_end) * Math.cos(y_angle_end) * this.radius).color(1f, 1f, 1f, 1f).uv((xz + 1) / 64f, (-y + 15) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_end) * Math.cos(y_angle_end)), (float) (Math.sin(y_angle_end)), (float) (Math.cos(xz_angle_end) * Math.cos(y_angle_end))).endVertex();
+                    bufferBuilder.vertex(Math.sin(xz_angle_start) * Math.cos(y_angle_end) * this.radius, Math.sin(y_angle_end) * this.radius, Math.cos(xz_angle_start) * Math.cos(y_angle_end) * this.radius).color(1f, 1f, 1f, 1f).uv(xz / 64f, (-y + 15) / 32f).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal((float) (Math.sin(xz_angle_start) * Math.cos(y_angle_end)), (float) (Math.sin(y_angle_end)), (float) (Math.cos(xz_angle_start) * Math.cos(y_angle_end))).endVertex();}
             }
             vertexBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
             vertexBuffer.bind();

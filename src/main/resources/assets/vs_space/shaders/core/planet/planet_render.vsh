@@ -18,6 +18,7 @@ uniform vec3 PlanetPos;
 struct Star {
     vec3 Pos;   //恒星位置
     vec4 Color; //恒星颜色（RGBA）
+    float R;    //恒心半径
 };
 struct Planet {
     vec3 Pos;   //行星位置
@@ -39,7 +40,7 @@ void main() {
     for (int i = 0; i < StarCount; i++) {
         vec3 StarPos = vec3(starlist[i].Pos);
         vec3 LightDirection = vec3(StarPos - PlanetPos + Position);
-        float this_brightness = dot(Normal, LightDirection) / length(LightDirection); //向量投影
+        float this_brightness = dot(Normal, normalize(LightDirection)); //向量投影
         if (this_brightness > 0.0f) brightness += this_brightness;
     }
 
