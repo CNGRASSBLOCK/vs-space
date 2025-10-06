@@ -3,8 +3,8 @@
   "scale": 1000,
   "pos": [0,0,0],
   "rotate": [0,0,0,1],
-  "texture": "",
-  "night_texture": "",
+  "texture": "vs_space:textures/celestial_body/planet/earth/earth_surface.png",
+  "night_texture": "vs_space:textures/celestial_body/planet/earth/earth_surface_night.png",
   "atmospheric_data": {
     "has" : true,
     "height": 10,

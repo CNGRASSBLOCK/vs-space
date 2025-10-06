@@ -36,9 +36,13 @@ public class Planet extends CelestialBody {
     public double getAtmosphericHeight() { return this.AtmosphericHeight; }
     public void setAtmosphericColor(Vector4d atmospheric_color) { this.AtmosphericColor = new Vector4d(atmospheric_color); }
     public Vector4d getAtmosphericColor() { return new Vector4d(this.AtmosphericColor); }
+    public void setPlanetSurface(ResourceLocation planet_surface) { this.planet_surface = planet_surface; }
+    public ResourceLocation getPlanetSurface() { return this.planet_surface; }
+    public void setPlanetSurfaceNight(ResourceLocation planet_surface_night) { this.planet_surface_night = planet_surface_night; }
+    public ResourceLocation getPlanetSurfaceNight() { return planet_surface_night; }
 
-    private ResourceLocation planet_surface = new ResourceLocation("vs_space:textures/celestial_body/planet/earth/earth_surface.png");
-    private ResourceLocation planet_surface_night = new ResourceLocation("vs_space:textures/celestial_body/planet/earth/earth_surface_night.png");
+    private ResourceLocation planet_surface;
+    private ResourceLocation planet_surface_night;
     @Override
     public void render(PoseStack poseStack, Matrix4f projectionMatrix) {
         Vec3 camPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
