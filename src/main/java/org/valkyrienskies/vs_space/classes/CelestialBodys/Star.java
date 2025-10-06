@@ -21,7 +21,10 @@ public class Star extends CelestialBody {
     private double temperature = 0; //开尔文
     private final float[] RGB = new float[]{1f, 1f, 1f};
 
-    public Star(String name, Vector3d pos, Quaterniond rotate, double radius) { super(name, pos, rotate, radius); }
+    public Star(String name, Vector3d pos, Quaterniond rotate, double radius, double temperature) {
+        super(name, pos, rotate, radius);
+        setTemperature(temperature);
+    }
 
     public void setTemperature(double temperature) {
         this.temperature = temperature;

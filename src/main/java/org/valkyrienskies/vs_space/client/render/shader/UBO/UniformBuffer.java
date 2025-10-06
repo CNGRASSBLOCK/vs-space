@@ -3,17 +3,18 @@ package org.valkyrienskies.vs_space.client.render.shader.UBO;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.opengl.GL31;
+import org.lwjgl.system.MemoryUtil;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
 //这个类大部分都是gpt5写的
-public class UniformBufferObject {
+public class UniformBuffer {
     private final int uboId;
     private final int bindingPoint;
     private final int size;
 
-    public UniformBufferObject(int bindingPoint, int size) {
+    public UniformBuffer(int bindingPoint, int size) {
         this.bindingPoint = bindingPoint;
         this.size = size;
 
@@ -26,14 +27,23 @@ public class UniformBufferObject {
     }
 
     public void update(FloatBuffer data) {
-        GL15.glBindBuffer(GL31.GL_UNIFORM_BUFFER, uboId);
-        GL15.glBufferSubData(GL31.GL_UNIFORM_BUFFER, 0, data);
-        GL15.glBindBuffer(GL31.GL_UNIFORM_BUFFER, 0);
+        update(data,false);
     }
     public void update(ByteBuffer data) {
+        update(data,false);
+    }
+
+    public void update(FloatBuffer data,boolean autoFree) {
         GL15.glBindBuffer(GL31.GL_UNIFORM_BUFFER, uboId);
         GL15.glBufferSubData(GL31.GL_UNIFORM_BUFFER, 0, data);
         GL15.glBindBuffer(GL31.GL_UNIFORM_BUFFER, 0);
+        if (autoFree) MemoryUtil.memFree(data);
+    }
+    public void update(ByteBuffer data,boolean autoFree) {
+        GL15.glBindBuffer(GL31.GL_UNIFORM_BUFFER, uboId);
+        GL15.glBufferSubData(GL31.GL_UNIFORM_BUFFER, 0, data);
+        GL15.glBindBuffer(GL31.GL_UNIFORM_BUFFER, 0);
+        if (autoFree) MemoryUtil.memFree(data);
     }
 
     public void bindToShader(int shaderProgramId, String blockName) {

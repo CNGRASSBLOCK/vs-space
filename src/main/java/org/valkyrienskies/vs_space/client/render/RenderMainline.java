@@ -30,7 +30,6 @@ import org.valkyrienskies.vs_space.client.render.shader.VSSpaceShader;
 import org.valkyrienskies.vs_space.data.VSSpaceDataPack;
 
 import java.lang.Math;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,16 +37,6 @@ import java.util.List;
 public class RenderMainline {
     public static List<CelestialBody> RenderCelestialBodyList = new ArrayList<>();
     public static CelestialBodyDataUBO celestialBodyDataUBO = null;
-
-    static {
-        RenderCelestialBodyList.add(new Planet("a", new Vector3d(0, 100, 0), new Quaterniond(), 50,10,new Vector4d()));
-        Star star = new Star("b", new Vector3d(1000, 900, 0), new Quaterniond(), 400);
-        star.setTemperature(12000);
-    //    RenderCelestialBodyList.add(star);
-        Star star1 = new Star("c", new Vector3d(-1000, 300, 0), new Quaterniond(), 100);
-        star1.setTemperature(6000);
-        RenderCelestialBodyList.add(star1);
-    }
 
     @SubscribeEvent
     public static void onWorldRender(RenderLevelStageEvent event) {
@@ -70,13 +59,17 @@ public class RenderMainline {
         }
     }
 
+    private static ResourceLocation sky_box_text = new ResourceLocation("vs_space:textures/sky_box/space_skybox.png");
     private static void RenderSkyBox(PoseStack poseStack) {
         RenderSystem.enableBlend();
         RenderSystem.depthMask(false);
-        RenderSystem.setShaderTexture(0, new ResourceLocation("vs_space:textures/sky_box/space_skybox.png"));
+        RenderSystem.setShaderTexture(0, sky_box_text);
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferbuilder = tesselator.getBuilder();
+
+        poseStack.pushPose();
+        poseStack.mulPose(new Quaternionf(0.514589197008, 0.856291832413, 0.053894143178, 0.000000000000));
 
         for(int i = 0; i < 6; ++i) {
             poseStack.pushPose();
@@ -96,44 +89,55 @@ public class RenderMainline {
             poseStack.popPose();
         }
 
+        poseStack.popPose();
+
         RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
     }
 
     private static final Matrix4f ProjectionMatrix = new Matrix4f();
     private static final Matrix4f ModelViewMatrix = new Matrix4f();
+    private static Vector2i ScreenSize = new Vector2i();
     private static void RenderEffect(float PartialTick) {
         if (celestialBodyDataUBO == null) return;
 
-        Matrix4f ProjMat = new Matrix4f(ProjectionMatrix);
-        Matrix4f ModelViewMat = new Matrix4f(ModelViewMatrix);
+        Matrix4f ProjMat = ProjectionMatrix;
+        Matrix4f ModelViewMat = ModelViewMatrix;
         Vec3 CameraPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
         ModelViewMat.rotateY((float) Math.toRadians(Minecraft.getInstance().gameRenderer.getMainCamera().getYRot() + 180));
         ModelViewMat.rotateLocalX((float) Math.toRadians(Minecraft.getInstance().gameRenderer.getMainCamera().getXRot()));
         ModelViewMat.translate((float) -CameraPos.x(), (float) -CameraPos.y(), (float) -CameraPos.z());
-        Vector2i ScreenSize = new Vector2i(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
-        if (ScreenSize.x() == 0 || ScreenSize.y() == 0) ScreenSize = new Vector2i(1,1);
 
 
 
         PostPass StarBloomPostPass = VSSpaceShader.StarBloom.passes.get(0);
         StarBloomPostPass.addAuxAsset("depth", () -> Minecraft.getInstance().getMainRenderTarget().getDepthTextureId(), ScreenSize.x(), ScreenSize.y());
         EffectInstance StarBloomEffect = StarBloomPostPass.getEffect();
+        StarBloomEffect.apply();
         StarBloomEffect.getUniform("iProjMat").set(new Matrix4f(ProjMat).invert());
         StarBloomEffect.getUniform("iModelViewMat").set(new Matrix4f(ModelViewMat).invert());
         StarBloomEffect.getUniform("CameraPos").set((float) CameraPos.x(), (float) CameraPos.y(), (float) CameraPos.z());
         celestialBodyDataUBO.bindToShader(StarBloomEffect.getId(), "CelestialBodyData");
-        VSSpaceShader.StarBloom.resize(ScreenSize.x(), ScreenSize.y());
-        VSSpaceShader.StarBloom.process(PartialTick);
 
         PostPass PlanetAtmospherePostPass = VSSpaceShader.PlanetAtmosphere.passes.get(0);
         PlanetAtmospherePostPass.addAuxAsset("depth", () -> Minecraft.getInstance().getMainRenderTarget().getDepthTextureId(), ScreenSize.x(), ScreenSize.y());
         EffectInstance PlanetAtmosphereEffect = PlanetAtmospherePostPass.getEffect();
+        PlanetAtmosphereEffect.apply();
         PlanetAtmosphereEffect.getUniform("iProjMat").set(new Matrix4f(ProjMat).invert());
         PlanetAtmosphereEffect.getUniform("iModelViewMat").set(new Matrix4f(ModelViewMat).invert());
         PlanetAtmosphereEffect.getUniform("CameraPos").set((float) CameraPos.x(), (float) CameraPos.y(), (float) CameraPos.z());
         celestialBodyDataUBO.bindToShader(PlanetAtmosphereEffect.getId(), "CelestialBodyData");
-        VSSpaceShader.PlanetAtmosphere.resize(ScreenSize.x(), ScreenSize.y());
+
+        Vector2i ThisScreenSize = new Vector2i(Minecraft.getInstance().getWindow().getScreenWidth(), Minecraft.getInstance().getWindow().getScreenHeight());
+        if (!ThisScreenSize.equals(ScreenSize) && ThisScreenSize.x + ThisScreenSize.y != 0) {
+            ScreenSize = ThisScreenSize;
+            VSSpaceShader.StarBloom.resize(ScreenSize.x(), ScreenSize.y());
+            VSSpaceShader.PlanetAtmosphere.resize(ScreenSize.x(), ScreenSize.y());
+        }
+        RenderSystem.disableBlend();
+        RenderSystem.disableDepthTest();
+        RenderSystem.resetTextureMatrix();
+        VSSpaceShader.StarBloom.process(PartialTick);
         VSSpaceShader.PlanetAtmosphere.process(PartialTick);
 
         Minecraft.getInstance().getMainRenderTarget().bindWrite(true);

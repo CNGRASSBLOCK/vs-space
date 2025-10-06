@@ -17,13 +17,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Planet extends CelestialBody {
-    private double AtmosphericHeight;
-    private Vector4d AtmosphericColor;
+    private double AtmosphericHeight = 10;
+    private Vector4d AtmosphericColor = new Vector4d();
 
-    public Planet(String name, Vector3d pos, Quaterniond rotate, double radius, double atmospheric_height, Vector4d atmospheric_color) {
+    public Planet(String name, Vector3d pos, Quaterniond rotate, double radius, ResourceLocation planet_surface) {
         super(name, pos, rotate, radius);
-        this.AtmosphericHeight = atmospheric_height;
-        this.AtmosphericColor = new Vector4d(atmospheric_color);
+        this.planet_surface = planet_surface;
+        this.planet_surface_night = null;
+    }
+
+    public Planet(String name, Vector3d pos, Quaterniond rotate, double radius, ResourceLocation planet_surface, ResourceLocation planet_surface_night) {
+        super(name, pos, rotate, radius);
+        this.planet_surface = planet_surface;
+        this.planet_surface_night = planet_surface_night;
     }
 
     public void setAtmosphericHeight(double atmospheric_height) { this.AtmosphericHeight = atmospheric_height; }
@@ -31,6 +37,8 @@ public class Planet extends CelestialBody {
     public void setAtmosphericColor(Vector4d atmospheric_color) { this.AtmosphericColor = new Vector4d(atmospheric_color); }
     public Vector4d getAtmosphericColor() { return new Vector4d(this.AtmosphericColor); }
 
+    private ResourceLocation planet_surface = new ResourceLocation("vs_space:textures/celestial_body/planet/earth/earth_surface.png");
+    private ResourceLocation planet_surface_night = new ResourceLocation("vs_space:textures/celestial_body/planet/earth/earth_surface_night.png");
     @Override
     public void render(PoseStack poseStack, Matrix4f projectionMatrix) {
         Vec3 camPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
@@ -73,8 +81,8 @@ public class Planet extends CelestialBody {
         }
         VSSpaceShader.PlanetRender.get().safeGetUniform("PlanetPos").set((float) pos.x(), (float) pos.y(), (float) pos.z());
 
-        RenderSystem.setShaderTexture(0, new ResourceLocation("vs_space:textures/celestial_body/planet/earth/earth_surface.png"));
-        RenderSystem.setShaderTexture(1, new ResourceLocation("vs_space:textures/celestial_body/planet/earth/earth_surface_night.png"));
+        RenderSystem.setShaderTexture(0, planet_surface);
+        if (planet_surface_night != null) RenderSystem.setShaderTexture(1, planet_surface_night);
 
         vertexBuffer.bind();
         vertexBuffer.drawWithShader(matrix, projectionMatrix, VSSpaceShader.PlanetRender.get());

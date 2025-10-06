@@ -1,8 +1,10 @@
 {
-  "type": "star",
+  "type": "planet",
   "scale": 1000,
   "pos": [0,0,0],
+  "rotate": [0,0,0,1],
   "texture": "",
+  "night_texture": "",
   "atmospheric_data": {
     "has" : true,
     "height": 10,

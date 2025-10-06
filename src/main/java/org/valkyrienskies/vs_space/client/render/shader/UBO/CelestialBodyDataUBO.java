@@ -1,6 +1,7 @@
 package org.valkyrienskies.vs_space.client.render.shader.UBO;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.system.MemoryUtil;
 import org.valkyrienskies.vs_space.classes.CelestialBody;
 import org.valkyrienskies.vs_space.classes.CelestialBodys.Planet;
 import org.valkyrienskies.vs_space.classes.CelestialBodys.Star;
@@ -9,7 +10,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CelestialBodyDataUBO extends UniformBufferObject {
+public class CelestialBodyDataUBO extends UniformBuffer {
     public CelestialBodyDataUBO(int bindingPoint) {
         super(bindingPoint, 3872);
         //star: int + 16 * (vec3 + vec4 + float) + planet: int + 64 * (vec3 + float + float + vec4)
@@ -23,7 +24,7 @@ public class CelestialBodyDataUBO extends UniformBufferObject {
         for (CelestialBody celestialBody : celestialBodyList) if (celestialBody instanceof Planet planet) PlanetList.add(planet);
         if (PlanetList.size() > 64) PlanetList.subList(64, PlanetList.size()).clear();
 
-        ByteBuffer buffer = BufferUtils.createByteBuffer(getSize());
+        ByteBuffer buffer = MemoryUtil.memCalloc(getSize());
 
         //Star的
         buffer.putInt(StarList.size());
@@ -90,7 +91,7 @@ public class CelestialBodyDataUBO extends UniformBufferObject {
         }
 
         buffer.flip();
-        update(buffer);
+        update(buffer,true);
     }
 }
 
