@@ -1,0 +1,34 @@
+{
+  "vertex": "vs_space:black_hole/black_hole_render",
+  "fragment": "vs_space:black_hole/black_hole_render",
+  "samplers": [
+    { "name": "Sampler0" },
+    { "name": "Sampler1" }
+  ],
+  "attributes": [
+    "Position",
+    "Color",
+    "UV0",
+    "Normal"
+  ],
+  "uniforms": [
+    {
+      "name": "ProjMat",
+      "type": "matrix4x4",
+      "count": 16,
+      "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+    },
+    {
+      "name": "ModelViewMat",
+      "type": "matrix4x4",
+      "count": 16,
+      "values": [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+    },
+    {
+      "name": "PlanetPos",
+      "type": "float",
+      "count": 3,
+      "values": [0.0, 0.0, 0.0]
+    }
+  ]
+}

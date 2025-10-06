@@ -19,9 +19,11 @@ public class VSSpaceShader {
     //核心着色器
     public static Supplier<ShaderInstance> StarRender;
     public static Supplier<ShaderInstance> PlanetRender;
+    public static Supplier<ShaderInstance> BlackHoleRender;
     //后处理着色器
     public static PostChain StarBloom;
     public static PostChain PlanetAtmosphere;
+    public static PostChain BlackHoleGravity;
 
     @Mod.EventBusSubscriber(modid = VSSpace.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class RegisterShaders {
@@ -33,6 +35,9 @@ public class VSSpaceShader {
             event.registerShader(new ShaderInstance(event.getResourceProvider(),
                     new ResourceLocation(VSSpace.MODID, "planet/planet_render"),
                     DefaultVertexFormat.NEW_ENTITY), shader -> PlanetRender = () -> shader);
+            event.registerShader(new ShaderInstance(event.getResourceProvider(),
+                    new ResourceLocation(VSSpace.MODID, "black_hole/black_hole_render"),
+                    DefaultVertexFormat.POSITION), shader -> BlackHoleRender = () -> shader);
         }
     }
 
@@ -50,6 +55,11 @@ public class VSSpaceShader {
                     PlanetAtmosphere = new PostChain(Minecraft.getInstance().getTextureManager(), Minecraft.getInstance().getResourceManager(), Minecraft.getInstance().getMainRenderTarget(),
                             new ResourceLocation(VSSpace.MODID, "shaders/post/planet/planet_atmosphere.json"));
                     PlanetAtmosphere.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
+                }
+                if (BlackHoleGravity == null) {
+                    BlackHoleGravity = new PostChain(Minecraft.getInstance().getTextureManager(), Minecraft.getInstance().getResourceManager(), Minecraft.getInstance().getMainRenderTarget(),
+                            new ResourceLocation(VSSpace.MODID, "shaders/post/black_hole/black_hole_gravity.json"));
+                    BlackHoleGravity.resize(Minecraft.getInstance().getWindow().getWidth(), Minecraft.getInstance().getWindow().getHeight());
                 }
             } catch (Throwable throwable) {
                 VSSpace.LOGGER.error(throwable.getMessage()); }
