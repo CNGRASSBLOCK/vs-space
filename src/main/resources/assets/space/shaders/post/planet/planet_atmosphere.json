@@ -1,0 +1,26 @@
+{
+    "targets": [
+        "smooth",
+        "swap"
+    ],
+    "passes": [
+        {
+            "name": "space:planet/planet_atmosphere",
+            "intarget": "minecraft:main",
+            "outtarget": "smooth",
+            "uniforms": []
+        },
+        {
+            "name": "space:planet/smooth_atmosphere",
+            "intarget": "smooth",
+            "outtarget": "swap",
+            "uniforms": []
+        },
+        {
+            "name": "minecraft:blit",
+            "intarget": "swap",
+            "outtarget": "minecraft:main",
+            "uniforms": []
+        }
+    ]
+}

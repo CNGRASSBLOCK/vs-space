@@ -1,0 +1,12 @@
+{
+  "type": "planet",
+  "scale": 1000,
+  "pos": [12000,0,0],
+  "rotate": [0,0,0,1],
+  "texture": "space:textures/celestial_body/planet/earth/earth_surface.png",
+  "night_texture": "space:textures/celestial_body/planet/earth/earth_surface_night.png",
+  "atmospheric_data": {
+    "height": 17,
+    "color": [255,255,255]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "planet",
+  "scale": 1000,
+  "pos": [16000,0,0],
+  "rotate": [0,0,0,1],
+  "texture": "space:textures/celestial_body/planet/earth/earth_surface.png",
+  "night_texture": "space:textures/celestial_body/planet/earth/earth_surface_night.png",
+  "atmospheric_data": {
+    "height": 10,
+    "color": [255,255,255]
+  },
+  "ring_data": {
+    "inner_radius": 1,
+    "outside_radius": 1
+  }
+}

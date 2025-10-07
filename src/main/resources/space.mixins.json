@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.cn_grass_block.space.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "space.refmap.json",
+  "mixins": [
+    "NoVoidDamage"
+  ],
+  "client": [
+    "FarRendererFix"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
