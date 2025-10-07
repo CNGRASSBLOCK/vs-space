@@ -5,10 +5,10 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "space.refmap.json",
   "mixins": [
-    "NoVoidDamage"
+    "server.NoVoidDamage"
   ],
   "client": [
-    "FarRendererFix"
+    "client.renderer.FarRendererFix"
   ],
   "injectors": {
     "defaultRequire": 1

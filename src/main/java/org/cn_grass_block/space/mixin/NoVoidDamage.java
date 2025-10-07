@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/org/cn_grass_block/space/mixin/NoVoidDamage.java
 package org.cn_grass_block.space.mixin;
+========
+package org.valkyrienskies.vs_space.mixin.server;
+>>>>>>>> origin/master:src/main/java/org/valkyrienskies/vs_space/mixin/server/NoVoidDamage.java
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;

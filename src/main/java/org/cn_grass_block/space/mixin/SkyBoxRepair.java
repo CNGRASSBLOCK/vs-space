@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:src/main/java/org/cn_grass_block/space/mixin/SkyBoxRepair.java
 package org.cn_grass_block.space.mixin;
+========
+package org.valkyrienskies.vs_space.mixin.client.renderer;
+>>>>>>>> origin/master:src/main/java/org/valkyrienskies/vs_space/mixin/client/renderer/SkyBoxRepair.java
 
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
