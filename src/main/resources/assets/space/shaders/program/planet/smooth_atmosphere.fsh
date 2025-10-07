@@ -13,15 +13,10 @@ void main() {
 
     vec4 result = vec4(0.0);
 
-    result += texture(DiffuseSampler, texCoord + vec2(3, 3) * texelSize);
     result += texture(DiffuseSampler, texCoord + vec2(3, 0) * texelSize);
-    result += texture(DiffuseSampler, texCoord + vec2(3, -3) * texelSize);
     result += texture(DiffuseSampler, texCoord + vec2(0, 3) * texelSize);
     result += texture(DiffuseSampler, texCoord + vec2(0, 0) * texelSize);
-    result += texture(DiffuseSampler, texCoord + vec2(0, -3) * texelSize);
     result += texture(DiffuseSampler, texCoord + vec2(-3, 3) * texelSize);
-    result += texture(DiffuseSampler, texCoord + vec2(-3, 0) * texelSize);
-    result += texture(DiffuseSampler, texCoord + vec2(-3, -3) * texelSize);
 
 
     fragColor = result / 9.0 + texture(main_screen, texCoord);
