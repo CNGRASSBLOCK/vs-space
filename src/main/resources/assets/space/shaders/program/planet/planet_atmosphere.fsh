@@ -121,5 +121,5 @@ void main() {
         }
     }
 
-    fragColor = vec4(brightness.xyz, 1.0f);
+    fragColor = vec4(brightness.xyz, 1.0f) + texture(DiffuseSampler, texCoord);
 }
