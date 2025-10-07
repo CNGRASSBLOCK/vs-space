@@ -1,4 +1,4 @@
-package org.valkyrienskies.vs_space.mixin;
+package org.valkyrienskies.vs_space.mixin.server;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;

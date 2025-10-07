@@ -1,4 +1,4 @@
-package org.valkyrienskies.vs_space.mixin;
+package org.valkyrienskies.vs_space.mixin.client.renderer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
