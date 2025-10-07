@@ -22,7 +22,6 @@ struct Planet {
     float AtmosphericHeight; //大气高度
     vec4 AtmosphericColor;   //大气颜色
 };
-
 layout(std140) uniform CelestialBodyData {
     int StarCount;
     Star starlist[16];
@@ -31,6 +30,7 @@ layout(std140) uniform CelestialBodyData {
     Planet planetlist[64];
 };
 
+//球射线相交
 struct IntersectionData { vec3 nearPoint; vec3 farPoint;};
 IntersectionData getIntersectSphereData(vec3 rayOrigin, vec3 rayDir, vec3 sphereCenter, float sphereRadius) {
     IntersectionData result;
@@ -53,6 +53,7 @@ IntersectionData getIntersectSphereData(vec3 rayOrigin, vec3 rayDir, vec3 sphere
     return result;
 }
 
+//遮挡检测
 bool Occlusion(vec3 Origin, vec3 LightPos) {
     vec3 Ray = LightPos - Origin;
     float RayLen2 = dot(Ray, Ray);
@@ -67,6 +68,30 @@ bool Occlusion(vec3 Origin, vec3 LightPos) {
     return false;
 }
 
+//散射
+float computeAtmosphericReflectance(float totalHeight, float currentHeight) {
+    const float scaleHeight   = 2;   // 尺度高度 H ~ 8 km
+    const float rho0          = 1.0;      // 归一化地表密度
+    const float sigmaRayleigh = 0.025;   // Rayleigh 有效散射截面 (近似值)
+    const float baseReflect   = 0.3;      // 地表附近的最大反射率
+
+    float h = clamp(currentHeight, 0.0, totalHeight);
+    return baseReflect * (1.0 - exp(-sigmaRayleigh * rho0 * exp(-h / scaleHeight) * (totalHeight - h)));
+}
+
+//色散
+vec3 computeDispersionColor(vec3 incident, vec3 normal) {
+    float r = dot(incident, normal) * 0.65 * 0.65;
+    float g = dot(incident, normal) * 0.51 * 0.51;
+    float b = dot(incident, normal) * 0.45 * 0.45;
+
+    return clamp(vec3(r, g, b), 0.0, 1.0);
+}
+
+//随机数
+float rand(vec2 co) { return fract(sin(dot(co, vec2(127.1, 311.7))) * 43758.5453 + sin(dot(co, vec2(269.5, 183.3))) * 12345.6789); }
+
+//屏幕坐标到世界坐标
 vec3 ScreenToWorld(vec2 screenPos) {
     vec4 view = iProjMat * vec4(screenPos * 2.0 - 1.0, texture(depth, screenPos).r * 2.0 - 1.0, 1.0);
     view.w = max(view.w, 1.0e-8f);
@@ -84,12 +109,15 @@ void main() {
 
         IntersectionData AtmosphereIntersection = getIntersectSphereData(CameraPos, normalize(Ray), planet.Pos, planet.R + planet.AtmosphericHeight);
         if (length(AtmosphereIntersection.farPoint - AtmosphereIntersection.nearPoint) <= 0) continue;
-        vec3 UnitLight = (AtmosphereIntersection.farPoint - AtmosphereIntersection.nearPoint) * 0.005;
-        for (int j = 0; j < 200; j++) {
-            vec3 LightPos = AtmosphereIntersection.nearPoint + UnitLight * j;
+        vec3 UnitLight = (AtmosphereIntersection.farPoint - AtmosphereIntersection.nearPoint) * 0.05;
+        for (int j = 0; j < 20; j++) {
+            vec3 LightPos = AtmosphereIntersection.nearPoint + UnitLight * (j + rand(texCoord));
             if (Occlusion(LightPos, CameraPos) || distance(LightPos, planet.Pos) <= planet.R) continue;
-            float p = 1024 * exp(-0.275 * (length(LightPos - planet.Pos) - planet.AtmosphericHeight));
-            for (int x = 0; x < StarCount; x++) if (!Occlusion(LightPos, starlist[x].Pos)) brightness += vec4(0.52734,0.8043,0.91796,1) * length(UnitLight) * p;
+            float ReflectionCoefficient = computeAtmosphericReflectance(planet.AtmosphericHeight, length(LightPos - planet.Pos) - planet.R);
+            for (int x = 0; x < StarCount; x++) if (!Occlusion(LightPos, starlist[x].Pos)) {
+                vec4 dspersion_color = vec4(computeDispersionColor(normalize(LightPos - starlist[x].Pos), normalize(LightPos - planet.Pos)), 1.0f);
+                brightness += planet.AtmosphericColor * length(UnitLight) * ReflectionCoefficient;
+            }
         }
     }
 

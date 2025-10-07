@@ -2,5 +2,6 @@
   "type": "star",
   "scale": 1000,
   "pos": [0,0,0],
-  "temperature": 1000
+  "rotate": [0,0,0,1],
+  "temperature": 6000
 }

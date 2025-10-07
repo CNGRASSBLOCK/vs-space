@@ -15,12 +15,9 @@ public class ServerCelestialBodyPool {
     private static final Map<String, List<CelestialBody>> CelestialBodyPool = new HashMap<>();
 
     public static List<String> GetSpaceWorld() { return CelestialBodyPool.keySet().stream().toList(); }
-    public static void PutCelestialBody(ServerLevel world, CelestialBody celestialBody) {
-        String WorldID = world.dimension().location().toString();
-        if (CelestialBodyPool.containsKey(WorldID)) CelestialBodyPool.get(WorldID).add(celestialBody);
-    }
-    public static void RemoveCelestialBody(ServerLevel world, CelestialBody celestialBody) {
-        String WorldID = world.dimension().location().toString();
-        if (CelestialBodyPool.containsKey(WorldID)) CelestialBodyPool.get(WorldID).remove(celestialBody);
-    }
+
+    public static void PutCelestialBody(ServerLevel world, CelestialBody celestialBody) { PutCelestialBody(world.dimension().location().toString(), celestialBody); }
+    public static void PutCelestialBody(String WorldID, CelestialBody celestialBody) { if (CelestialBodyPool.containsKey(WorldID)) CelestialBodyPool.get(WorldID).add(celestialBody); }
+    public static void RemoveCelestialBody(ServerLevel world, CelestialBody celestialBody) { RemoveCelestialBody(world.dimension().location().toString(), celestialBody); }
+    public static void RemoveCelestialBody(String WorldID, CelestialBody celestialBody) { if (CelestialBodyPool.containsKey(WorldID)) CelestialBodyPool.get(WorldID).remove(celestialBody); }
 }
