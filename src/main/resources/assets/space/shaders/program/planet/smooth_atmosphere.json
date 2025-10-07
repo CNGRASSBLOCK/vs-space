@@ -2,13 +2,14 @@
     "blend": {
         "func": "add",
         "srcrgb": "one",
-        "dstrgb": "one"
+        "dstrgb": "zero"
     },
     "vertex": "minecraft:sobel",
     "fragment": "space:planet/smooth_atmosphere",
     "attributes": [ "Position" ],
     "samplers": [
-        { "name": "DiffuseSampler" }
+        { "name": "DiffuseSampler" },
+        { "name": "main_screen" }
     ],
     "uniforms": [
         { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },

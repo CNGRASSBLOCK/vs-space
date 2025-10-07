@@ -15,7 +15,7 @@ import org.cn_grass_block.space.client.render.shader.SpaceShader;
 import java.lang.Math;
 
 public class Planet extends CelestialBody {
-    private double AtmosphericHeight = 10;
+    private double AtmosphericHeight = 17;
     private Vector4d AtmosphericColor = new Vector4d();
 
     public Planet(String name, Vector3d pos, Quaterniond rotate, double radius, ResourceLocation planet_surface) {

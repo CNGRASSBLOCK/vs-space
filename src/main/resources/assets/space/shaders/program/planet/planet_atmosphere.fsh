@@ -110,16 +110,17 @@ void main() {
         IntersectionData AtmosphereIntersection = getIntersectSphereData(CameraPos, normalize(Ray), planet.Pos, planet.R + planet.AtmosphericHeight);
         if (length(AtmosphereIntersection.farPoint - AtmosphereIntersection.nearPoint) <= 0) continue;
         vec3 UnitLight = (AtmosphereIntersection.farPoint - AtmosphereIntersection.nearPoint) * 0.02;
+        float UnitLightLength = length(UnitLight);
         for (int j = 0; j < 20; ++j) {
             vec3 LightPos = AtmosphereIntersection.nearPoint + UnitLight * (j + rand(texCoord));
             if (Occlusion(LightPos, CameraPos) || distance(LightPos, planet.Pos) <= planet.R) continue;
             float ReflectionCoefficient = computeAtmosphericReflectance(planet.AtmosphericHeight, length(LightPos - planet.Pos) - planet.R);
             for (int x = 0; x < StarCount; ++x) if (!Occlusion(LightPos, starlist[x].Pos)) {
                 vec4 dspersion_color = vec4(computeDispersionColor(normalize(LightPos - starlist[x].Pos), normalize(LightPos - planet.Pos)), 1.0f);
-                brightness += vec4(1,1,1,1) * length(UnitLight) * ReflectionCoefficient;
+                brightness += vec4(1,1,1,1) * UnitLightLength * ReflectionCoefficient;
             }
         }
     }
 
-    fragColor = vec4(brightness.xyz, 1.0f) + texture(DiffuseSampler, texCoord);
+    fragColor = vec4(brightness.xyz, 1.0f);
 }

@@ -112,7 +112,9 @@ public class RenderMainline {
         celestialBodyDataUBO.bindToShader(StarBloomEffect.getId(), "CelestialBodyData");
 
         PostPass PlanetAtmospherePostPass = SpaceShader.PlanetAtmosphere.passes.get(0);
+        PostPass SmoothAtmospherePostPass = SpaceShader.PlanetAtmosphere.passes.get(1);
         PlanetAtmospherePostPass.addAuxAsset("depth", () -> Minecraft.getInstance().getMainRenderTarget().getDepthTextureId(), ScreenSize.x(), ScreenSize.y());
+        SmoothAtmospherePostPass.addAuxAsset("main_screen", () -> Minecraft.getInstance().getMainRenderTarget().getColorTextureId(), ScreenSize.x(), ScreenSize.y());
         EffectInstance PlanetAtmosphereEffect = PlanetAtmospherePostPass.getEffect();
         PlanetAtmosphereEffect.apply();
         PlanetAtmosphereEffect.getUniform("iProjMat").set(new Matrix4f(ProjMat).invert());
