@@ -1,4 +1,4 @@
-package org.cn_grass_block.space.mixin;
+package org.cn_grass_block.space.mixin.server;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;

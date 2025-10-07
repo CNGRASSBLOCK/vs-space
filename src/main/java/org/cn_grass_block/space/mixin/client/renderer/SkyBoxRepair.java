@@ -1,4 +1,4 @@
-package org.cn_grass_block.space.mixin;
+package org.cn_grass_block.space.mixin.client.renderer;
 
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
