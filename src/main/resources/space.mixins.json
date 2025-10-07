@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "space.refmap.json",
   "mixins": [
+    "client.compat.oculus.MixinPipelineManager",
     "server.NoVoidDamage"
   ],
   "client": [
